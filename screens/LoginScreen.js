@@ -19,7 +19,7 @@ function LoginScreen() {
     } catch (error) {
       Alert.alert(
         "Falha no Login!",
-        "Não foi possível logar-se. Por favor verifique as suas informações de login e tente novamente mais tarde!"
+        "Não foi possível logar-se ! Por favor verifique as suas informações de login e tente novamente mais tarde!"
       );
       setIsAuthenticating(false);
     }
