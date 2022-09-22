@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Button from "../components/ui/Button";
 import { AuthContext } from "../store/auth-context";
+import Header from "../components/ui/Header";
 
 function HomeScreen() {
   const authCtx = useContext(AuthContext);
@@ -12,6 +13,9 @@ function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Header>Home</Header>
+      </View>
       <View style={styles.textContainer}>
         <Text style={styles.text}>Tela Principal</Text>
       </View>
@@ -32,6 +36,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 32,
+  },
+  headerContainer: {
+    flex: 1,
   },
   text: {
     fontSize: 24,
