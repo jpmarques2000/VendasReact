@@ -13,8 +13,8 @@ import ProductsScreen from "./screens/ProductsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
 import AuthContextProvider, { AuthContext } from "./store/auth-context";
-import IconButton from "./components/ui/IconButton";
-import { View } from "react-native";
+import ProductsContextProvider from "./store/products-context";
+import ProductForm from "./components/ManageProducts/ProductForm";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createMaterialBottomTabNavigator();
@@ -99,6 +99,14 @@ function BottomTabStack() {
           ),
         }}
       />
+      <BottomTab.Screen
+        name="AddProduct"
+        component={ProductForm}
+        options={{
+          tabBarShowLabel: false,
+          tabBarStyle: { display: "none" },
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
@@ -157,10 +165,10 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <AuthContextProvider>
-        <Root />
+        <ProductsContextProvider>
+          <Root />
+        </ProductsContextProvider>
       </AuthContextProvider>
     </>
   );
 }
-
-
