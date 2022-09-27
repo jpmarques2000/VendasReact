@@ -164,14 +164,11 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      {/* <AuthContextProvider> */}
-      <ProductsContextProvider>
-        {/* <Root /> */}
-        <NavigationContainer>
-          <BottomTabStack />
-        </NavigationContainer>
-      </ProductsContextProvider>
-      {/* </AuthContextProvider> */}
+      <AuthContextProvider>
+        <ProductsContextProvider>
+          <Root />
+        </ProductsContextProvider>
+      </AuthContextProvider>
     </>
   );
 }
