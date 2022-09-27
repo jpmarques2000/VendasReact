@@ -7,25 +7,47 @@ import {
   View,
 } from "react-native";
 
-function ProductItem({ id, description, price, imageUrl }) {
+import IconButton from "../ui/IconButton";
+
+function ProductItem({ id, description, amount, image }) {
+  function addProductHandler() {
+    console.log("Adicionando produto ao carrinho");
+  }
+
   return (
     <ScrollView>
       <Pressable style={({ pressed }) => pressed && styles.pressed}>
         <View style={styles.productItem}>
-          <View>
-            <Text style={[styles.textBase, styles.description]}>
-              {description}
-            </Text>
-          </View>
-          <View style={styles.priceContainer}>
-            <Text style={styles.price}>R$ {price.toFixed(2)}</Text>
-          </View>
-          <View>
-            <Image
-              source={{ uri: imageUrl }}
-              //resizeMode="cover"
-              style={styles.image}
-              //resizeMethod="resize"
+          <View style={styles.productImageContainer}>
+            <View style={styles.productContainer}>
+              <View>
+                <Text style={[styles.textBase, styles.description]}>
+                  {description}
+                </Text>
+              </View>
+              <View style={styles.priceContainer}>
+                <Text style={styles.price}>R$ {amount}</Text>
+              </View>
+            </View>
+            <View>
+              <Image
+                source={{ uri: image }}
+                //resizeMode="cover"
+                style={styles.image}
+                //resizeMethod="resize"
+              />
+            </View>
+            <IconButton
+              icon="add-circle"
+              size={30}
+              color="blue"
+              onPress={addProductHandler}
+            />
+            <IconButton
+              icon="remove-circle"
+              size={30}
+              color="red"
+              onPress={addProductHandler}
             />
           </View>
         </View>
@@ -40,9 +62,16 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.75,
   },
+  productContainer: {
+    flexDirection: "column",
+    marginRight: 20,
+  },
+  productImageContainer: {
+    flexDirection: "row",
+  },
   productItem: {
     padding: 12,
-    marginVertical: 8,
+    marginVertical: 4,
     //backgroundColor: "#3374a0",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -75,11 +104,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   image: {
-    maxWidth: 70,
+    maxWidth: 130,
     maxHeight: 100,
     height: 100,
-    width: 70,
-    marginBottom: 4,
-    marginTop: 8,
+    width: 130,
   },
 });
