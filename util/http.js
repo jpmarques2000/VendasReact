@@ -24,11 +24,10 @@ export async function fetchProducts() {
       id: key,
       amount: response.data[key].amount,
       description: response.data[key].description,
-      image: responsa.data[key].image,
+      image: response.data[key].image,
     };
     products.push(productObj);
   }
-
   return products;
 }
 

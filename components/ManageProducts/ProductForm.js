@@ -76,7 +76,6 @@ function ProductForm({ defaultValues, navigation }) {
     try {
       console.log("Salvando Produto");
         const id = await storeProduct(productData);
-        console.log(id);
         productsCtx.addProduct({ ...productData, id: id });
       navigation.goBack();
     } catch (error) {

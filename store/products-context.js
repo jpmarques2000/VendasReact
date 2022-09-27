@@ -2,10 +2,10 @@ import { createContext, useReducer } from "react";
 
 export const ProductsContext = createContext({
   products: [],
-  addProduct: ({ description, amount }) => {},
+  addProduct: ({ description, amount, image }) => {},
   setProduct: (products) => {},
   deleteProduct: (id) => {},
-  updateProduct: (id, { description, amount }) => {},
+  updateProduct: (id, { description, amount, image }) => {},
 });
 
 function productsReducer(state, action) {
