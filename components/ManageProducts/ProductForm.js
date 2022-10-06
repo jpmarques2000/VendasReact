@@ -34,8 +34,11 @@ function ProductForm({ defaultValues, navigation }) {
   });
 
   function previewHandler() {
-    if (inputs.image.value == "") {
-      Alert.Alert("Favor adicionar endereço de imagem");
+    if (inputs.image.value === "") {
+      Alert.alert(
+        "Falha ao carregar imagem",
+        "Favor adicionar o endereço de imagem correto antes de vizualizar preview"
+      );
     } else {
       setPreviewImage(() => {
         return {
@@ -50,6 +53,16 @@ function ProductForm({ defaultValues, navigation }) {
       return {
         ...curInputs,
         [inputIdentifier]: { value: enteredValue, isValid: true },
+      };
+    });
+  }
+
+  function cleanScreen() {
+    setInputs(() => {
+      return {
+        ["amount"]: { value: "", isValid: true },
+        ["description"]: { value: "", isValid: true },
+        ["image"]: { value: "", isValid: true },
       };
     });
   }
@@ -85,6 +98,7 @@ function ProductForm({ defaultValues, navigation }) {
   }
 
   function cancelHandler() {
+    cleanScreen();
     navigation.goBack();
   }
 
@@ -93,6 +107,7 @@ function ProductForm({ defaultValues, navigation }) {
     try {
       const id = await storeProduct(productData);
       productsCtx.addProduct({ ...productData, id: id });
+      cleanScreen();
       navigation.goBack();
     } catch (error) {
       setError("Could not save data - please try again later");
