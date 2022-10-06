@@ -64,14 +64,16 @@ const styles = StyleSheet.create({
   },
   productContainer: {
     flexDirection: "column",
-    marginRight: 20,
+    marginRight: 8,
+    maxWidth: 137,
+    minWidth: 137,
   },
   productImageContainer: {
     flexDirection: "row",
   },
   productItem: {
     padding: 12,
-    marginVertical: 4,
+    marginVertical: 8,
     //backgroundColor: "#3374a0",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -104,9 +106,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   image: {
-    maxWidth: 130,
+    maxWidth: 110,
     maxHeight: 100,
     height: 100,
-    width: 130,
+    width: 110,
   },
 });

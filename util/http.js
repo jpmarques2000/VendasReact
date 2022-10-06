@@ -4,7 +4,6 @@ const BACKEND_URL =
   "https://react-native-curso-9927b-default-rtdb.firebaseio.com/";
 
 export async function storeProduct(productData) {
-  console.log(productData)
 
   const response = await axios.post(
     BACKEND_URL + "/products.json",

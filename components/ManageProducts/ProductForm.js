@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image, Alert } from "react-native";
 
 import Input from "./Input";
 import Button from "../ui/Button";
@@ -26,6 +26,25 @@ function ProductForm({ defaultValues, navigation }) {
     },
   });
 
+  const [previewImage, setPreviewImage] = useState({
+    imagePreview: {
+      value:
+        "https://www.karendominique.com/wp-content/uploads/2016/12/Nothing-to-Display.png",
+    },
+  });
+
+  function previewHandler() {
+    if (inputs.image.value == "") {
+      Alert.Alert("Favor adicionar endereço de imagem");
+    } else {
+      setPreviewImage(() => {
+        return {
+          ["imagePreview"]: { value: inputs.image.value },
+        };
+      });
+    }
+  }
+
   function inputChangedHandler(inputIdentifier, enteredValue) {
     setInputs((curInputs) => {
       return {
@@ -47,7 +66,6 @@ function ProductForm({ defaultValues, navigation }) {
     const imageIsValid = productData.image.trim().length > 0;
 
     if (!amountIsValid || !imageIsValid || !descriptionIsValid) {
-      // Alert.alert('Invalid input', 'Please check your input values');
       setInputs((curInputs) => {
         return {
           amount: { value: curInputs.amount.value, isValid: amountIsValid },
@@ -63,7 +81,6 @@ function ProductForm({ defaultValues, navigation }) {
       });
       return;
     }
-    console.log("Entrando na confirmação");
     confirmHandler(productData);
   }
 
@@ -74,9 +91,8 @@ function ProductForm({ defaultValues, navigation }) {
   async function confirmHandler(productData) {
     setIsSubmitting(true);
     try {
-      console.log("Salvando Produto");
-        const id = await storeProduct(productData);
-        productsCtx.addProduct({ ...productData, id: id });
+      const id = await storeProduct(productData);
+      productsCtx.addProduct({ ...productData, id: id });
       navigation.goBack();
     } catch (error) {
       setError("Could not save data - please try again later");
@@ -117,16 +133,31 @@ function ProductForm({ defaultValues, navigation }) {
           }}
         />
       </View>
-      <View style={styles.buttons}>
+      <View style={styles.imagePreviewContainer}>
+        <Image
+          style={styles.image}
+          source={{
+            uri: previewImage.imagePreview.value,
+          }}
+        />
+      </View>
+      <View style={styles.buttonPreviewContainer}>
         <View style={styles.buttonContainer}>
-          <Button style={styles.button} mode="flat" onPress={cancelHandler}>
-            Cancelar
+          <Button style={styles.button} mode="flat" onPress={previewHandler}>
+            Preview
           </Button>
         </View>
-        <View style={styles.buttonContainer}>
-          <Button style={styles.button} onPress={submitHandler}>
-            Cadastrar
-          </Button>
+        <View style={styles.buttons}>
+          <View style={styles.buttonContainer}>
+            <Button style={styles.button} mode="flat" onPress={cancelHandler}>
+              Cancelar
+            </Button>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button style={styles.button} onPress={submitHandler}>
+              Cadastrar
+            </Button>
+          </View>
         </View>
       </View>
     </View>
@@ -137,7 +168,7 @@ export default ProductForm;
 
 const styles = StyleSheet.create({
   form: {
-    marginTop: 20,
+    marginTop: 15,
   },
   title: {
     fontSize: 28,
@@ -147,6 +178,25 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: 5,
+  },
+  imagePreviewContainer: {
+    paddingVertical: 8,
+    paddingHorizontal: 24,
+    marginTop: 15,
+    marginRight: 30,
+    marginLeft: 80,
+    height: 120,
+    width: 250,
+    borderWidth: 2,
+    flexDirection: "row",
+    textAlign: "center",
+    justifyContent: "center",
+  },
+  image: {
+    maxWidth: 235,
+    maxHeight: 110,
+    height: 100,
+    width: 235,
   },
   inputsRow: {
     flexDirection: "row",
@@ -162,16 +212,17 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 20,
-    alignItems: "center",
   },
   button: {
     minWidth: 120,
-    marginHorizontal: 8,
+    marginHorizontal: 4,
   },
   buttonContainer: {
-    margin: 10,
+    margin: 20,
     width: 150,
+  },
+  buttonPreviewContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
