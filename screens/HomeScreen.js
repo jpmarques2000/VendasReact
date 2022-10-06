@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Button from "../components/ui/Button";
 import { AuthContext } from "../store/auth-context";
 import Header from "../components/ui/Header";
+import IconButton from "../components/ui/IconButton";
 
 function HomeScreen() {
   const authCtx = useContext(AuthContext);
@@ -14,15 +15,17 @@ function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Header>Home</Header>
-      </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>Tela Principal</Text>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button style={styles.button} onPress={logoutHandler}>
-          Deslogar
-        </Button>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>Tela Principal</Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <IconButton
+            icon="log-out"
+            size={25}
+            color="#blue"
+            onPress={logoutHandler}
+          />
+        </View>
       </View>
     </View>
   );
@@ -32,27 +35,33 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 32,
+    paddingVertical: 16,
   },
   headerContainer: {
-    flex: 1,
+    width: "100%",
+    height: "30%",
+    flexDirection: "row",
+    //alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#gray",
   },
   text: {
     fontSize: 24,
     fontWeight: "bold",
   },
   textContainer: {
-    justifyContent: "flex-start",
-    flexDirection: "column",
-    alignItems: "flex-start",
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "#333",
+    letterSpacing: 1,
   },
   button: {
     padding: 8,
   },
   buttonContainer: {
-    marginTop: 16,
+    flexDirection: "column",
+    // borderWidth: 1,
+    // justifyContent: "flex-start",
+    // alignItems: "flex-start"
   },
 });

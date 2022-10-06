@@ -100,11 +100,14 @@ function BottomTabStack() {
         }}
       />
       <BottomTab.Screen
-        name="AddProduct"
+        name="Novo Produto"
         component={ProductForm}
         options={{
           tabBarShowLabel: false,
           tabBarStyle: { display: "none" },
+          tabBarIcon: ({ color, size}) => (
+            <Ionicons name="add" color={color} size={25} />
+          )
         }}
       />
     </BottomTab.Navigator>
