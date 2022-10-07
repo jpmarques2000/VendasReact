@@ -6,17 +6,25 @@ import {
   Text,
   View,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import IconButton from "../ui/IconButton";
 
 function ProductItem({ id, description, amount, image }) {
+  const navigation = useNavigation();
+
   function addProductHandler() {
-    console.log("Adicionando produto ao carrinho");
+    navigation.navigate("Novo Produto", {
+      productId: id,
+    });
   }
 
   return (
     <ScrollView>
-      <Pressable style={({ pressed }) => pressed && styles.pressed}>
+      <Pressable
+        onPress={addProductHandler}
+        style={({ pressed }) => pressed && styles.pressed}
+      >
         <View style={styles.productItem}>
           <View style={styles.productImageContainer}>
             <View style={styles.productContainer}>
@@ -41,7 +49,7 @@ function ProductItem({ id, description, amount, image }) {
               icon="add-circle"
               size={30}
               color="blue"
-              onPress={addProductHandler}
+              onPress={addProductHandler.bind(id)}
             />
             <IconButton
               icon="remove-circle"
