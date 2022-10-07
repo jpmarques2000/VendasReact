@@ -6,6 +6,7 @@ export const ProductsContext = createContext({
   setProduct: (products) => {},
   deleteProduct: (id) => {},
   updateProduct: (id, { description, amount, image }) => {},
+  addToCart: (id, { description, amount, image }) => {},
 });
 
 function productsReducer(state, action) {
@@ -24,6 +25,15 @@ function productsReducer(state, action) {
       const updatedProducts = [...state];
       updatedProducts[updatableProductsIndex] = updatedItem;
       return updatedProducts;
+    case "ADDCART":
+      const cartProductsIndex = state.findIndex(
+        (products) => products.id === action.payload.id
+      );
+      const cartProducts = state[updatableProductsIndex];
+      const CartItem = { ...cartProducts, ...action.payload.data };
+      const cartProductsList = [...state];
+      cartProductsList[cartProductsIndex] = CartItem;
+      return cartProductsList;
     case "DELETE":
       return state.filter((products) => products.id !== action.payload);
     default:
@@ -50,12 +60,17 @@ function ProductsContextProvider({ children }) {
     dispatch({ type: "UPDATE", payload: { id: id, data: productsData } });
   }
 
+  function addToCart(id, productsData) {
+    dispatch({ type: "ADDCART", payload: { id: id, data: productsData } });
+  }
+
   const value = {
     products: productsState,
     setProduct: setProduct,
     addProduct: addProduct,
     deleteProduct: deleteProduct,
     updateProduct: updateProduct,
+    addToCart: addToCart,
   };
 
   return (

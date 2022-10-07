@@ -37,7 +37,7 @@ function ProductForm({ defaultValues, navigation }) {
     if (inputs.image.value === "") {
       Alert.alert(
         "Falha ao carregar imagem",
-        "Favor adicionar o endereço de imagem correto antes de vizualizar preview"
+        "Favor adicionar o endereço de imagem correto antes de visualizar preview"
       );
     } else {
       setPreviewImage(() => {
