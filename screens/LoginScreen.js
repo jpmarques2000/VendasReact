@@ -14,8 +14,9 @@ function LoginScreen() {
   async function loginHandler({ email, password }) {
     setIsAuthenticating(true);
     try {
-      const token = await login(email, password);
-      authCtx.authenticate(token);
+      const userResponse = await login(email, password);
+      // authCtx.storeUserId(userResponse.userUid); // Metodo caso esteja utilizando token temporario
+      authCtx.authenticate(userResponse.token);
     } catch (error) {
       Alert.alert(
         "Falha no Login!",

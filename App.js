@@ -12,9 +12,9 @@ import HomeScreen from "./screens/HomeScreen";
 import ProductsScreen from "./screens/ProductsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
+import ManageProduct from "./screens/ManageProduct";
 import AuthContextProvider, { AuthContext } from "./store/auth-context";
 import ProductsContextProvider from "./store/products-context";
-import ProductForm from "./components/ManageProducts/ProductForm";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createMaterialBottomTabNavigator();
@@ -101,13 +101,13 @@ function BottomTabStack() {
       />
       <BottomTab.Screen
         name="Novo Produto"
-        component={ProductForm}
+        component={ManageProduct}
         options={{
           tabBarShowLabel: false,
           tabBarStyle: { display: "none" },
-          tabBarIcon: ({ color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Ionicons name="add" color={color} size={25} />
-          )
+          ),
         }}
       />
     </BottomTab.Navigator>
