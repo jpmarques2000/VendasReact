@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 function ProductsOutput({ products }) {
   const navigation = useNavigation();
   function addProductHandler() {
-    navigation.navigate("AddProduct")
+    navigation.navigate("Novo Produto")
   }
 
   return (

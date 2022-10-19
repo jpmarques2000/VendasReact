@@ -1,12 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
 
-import Input from "./Input";
+import InputData from "./InputData";
 import Button from "../ui/Button";
 import { ProductsContext } from "../../store/products-context";
-import { storeProduct, updateProduct, deleteProduct } from "../../util/http";
 
-function ProductForm({ defaultValues, navigation }) {
+function ProductForm({
+  headerTitle,
+  submitButtonLabel,
+  onCancel,
+  onSubmit,
+  defaultValues,
+}) {
   const productsCtx = useContext(ProductsContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState();
@@ -65,6 +70,7 @@ function ProductForm({ defaultValues, navigation }) {
         ["image"]: { value: "", isValid: true },
       };
     });
+    onCancel();
   }
 
   function submitHandler() {
@@ -94,34 +100,16 @@ function ProductForm({ defaultValues, navigation }) {
       });
       return;
     }
-    confirmHandler(productData);
-  }
-
-  function cancelHandler() {
-    cleanScreen();
-    navigation.goBack();
-  }
-
-  async function confirmHandler(productData) {
-    setIsSubmitting(true);
-    try {
-      const id = await storeProduct(productData);
-      productsCtx.addProduct({ ...productData, id: id });
-      cleanScreen();
-      navigation.goBack();
-    } catch (error) {
-      setError("Could not save data - please try again later");
-      setIsSubmitting(false);
-    }
+    onSubmit(productData);
   }
 
   const formIsInvalid = !inputs.amount.isValid || !inputs.description.isValid;
 
   return (
     <View style={styles.form}>
-      <Text style={styles.title}>Novo Produto</Text>
+      <Text style={styles.title}>{headerTitle}</Text>
       <View style={styles.inputContainer}>
-        <Input
+        <InputData
           label="Descrição"
           invalid={!inputs.description.isValid}
           textInputConfig={{
@@ -130,7 +118,7 @@ function ProductForm({ defaultValues, navigation }) {
             value: inputs.description.value,
           }}
         />
-        <Input
+        <InputData
           label="Preço"
           invalid={!inputs.amount.isValid}
           textInputConfig={{
@@ -139,7 +127,7 @@ function ProductForm({ defaultValues, navigation }) {
             value: inputs.amount.value,
           }}
         />
-        <Input
+        <InputData
           label="Imagem"
           textInputConfig={{
             multiline: true,
@@ -164,13 +152,13 @@ function ProductForm({ defaultValues, navigation }) {
         </View>
         <View style={styles.buttons}>
           <View style={styles.buttonContainer}>
-            <Button style={styles.button} mode="flat" onPress={cancelHandler}>
+            <Button style={styles.button} mode="flat" onPress={cleanScreen}>
               Cancelar
             </Button>
           </View>
           <View style={styles.buttonContainer}>
             <Button style={styles.button} onPress={submitHandler}>
-              Cadastrar
+              {submitButtonLabel}
             </Button>
           </View>
         </View>

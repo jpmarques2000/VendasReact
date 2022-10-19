@@ -1,6 +1,7 @@
 import { useContext, useLayoutEffect, useState } from "react";
+import { View } from "react-native";
 
-import ProductForm from "../components/ManageProducts/ProductForm";
+import ProductForm from "../components/ManageInputs/ProductForm";
 import { ProductsContext } from "../store/products-context";
 import { storeProduct } from "../util/http";
 
@@ -24,12 +25,8 @@ function ManageProduct({ route, navigation }) {
   async function confirmHandler(productData) {
     setIsSubmitting(true);
     try {
-      if (isBuying) {
-        productsCtx.addToCart(editedProductId, productData);
-      } else {
-        const id = await storeProduct(productData);
-        productsCtx.addProduct({ ...productData, id: id });
-      }
+      const id = await storeProduct(productData);
+      productsCtx.addProduct({ ...productData, id: id });
       navigation.goBack();
     } catch (error) {
       setError("Could not save data - please try again later");
@@ -39,13 +36,14 @@ function ManageProduct({ route, navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: isBuying ? "Adicionar ao Carrinho" : "Novo Produto",
+      title: isBuying ? "Adicionar" : "Novo Produto",
     });
   }, [navigation, isBuying]);
 
   return (
     <View>
       <ProductForm
+        headerTitle={isBuying ? "Adicionar ao Carrinho" : "Novo Produto"}
         submitButtonLabel={isBuying ? "Adicionar" : "Cadastrar"}
         onSubmit={confirmHandler}
         onCancel={cancelHandler}
@@ -54,3 +52,5 @@ function ManageProduct({ route, navigation }) {
     </View>
   );
 }
+
+export default ManageProduct;
